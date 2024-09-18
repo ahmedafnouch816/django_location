@@ -1,12 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
+from django.utils import timezone
 # Create your models here.
 
 
 class Vehicule(models.Model):
-    # Exemple simplifié du modèle Véhicule
     marque = models.CharField(max_length=100)
     modele = models.CharField(max_length=100)
     annee = models.IntegerField()
@@ -16,26 +15,25 @@ class Vehicule(models.Model):
     prix_par_jour = models.DecimalField(max_digits=10, decimal_places=2)
     disponible = models.BooleanField(default=True)
     date_ajout = models.DateTimeField(auto_now_add=True)
-    #photo = models.ImageField(upload_to='vehicules/')
+    #photo = models.ImageField(upload_to='vehicules/')  # Ensure this line exists
     immatriculation = models.CharField(max_length=50, unique=True)
     kilometrage = models.IntegerField()
     etat = models.CharField(max_length=50, choices=[('disponible', 'Disponible'), ('reservé', 'Réservé'), ('maintenance', 'Maintenance')])
 
     def __str__(self):
-        return f"{self.marque} {self.modele} ({self.immatriculation})"
-
+        return f"{self.marque} {self.modele}"
 class Client(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
-    telephone = models.CharField(max_length=15, blank=True, null=True)
-    adresse = models.TextField(blank=True, null=True)
-    permis_conduire = models.FileField(upload_to='permis_conduire/', blank=True, null=True)
-    date_inscription = models.DateTimeField(auto_now_add=True)
+    email = models.EmailField()  # Removed unique=True to allow duplicate emails
+    telephone = models.CharField(max_length=15, null=True, blank=True)
+    adresse = models.TextField(null=True, blank=True)
+    permis_conduire = models.FileField(upload_to='permis/', null=True, blank=True)
+    date_inscription = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.prenom} {self.nom} ({self.email})"
+        return f"{self.nom} {self.prenom}"
 
 class Reservation(models.Model):
     vehicule = models.ForeignKey(Vehicule, on_delete=models.CASCADE)  # Lien vers le véhicule réservé

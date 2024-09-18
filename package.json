@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "datatables.net-dt": "^2.1.6",
+    "flowbite": "^2.5.1"
+  }
+}

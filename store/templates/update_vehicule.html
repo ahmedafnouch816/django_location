@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}UPDATE VEHICULE{% endblock %}
+
+{% block content %}
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        UPDATE VEHICULE
+    </h2>
+</div>
+
+<div class="bg-white p-5 rounded-lg shadow-md mt-6 w-full sm:w-3/4 lg:w-1/2 mx-auto">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="mb-5 w-full">
+            <label for="marque" class="form-label"><strong>Marque</strong></label>
+            <input id="marque" name="marque" type="text" value="{{ vehicule.marque }}" class="form-control w-full" placeholder="Marque" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="modele" class="form-label"><strong>Modèle</strong></label>
+            <input id="modele" name="modele" type="text" value="{{ vehicule.modele }}" class="form-control w-full" placeholder="Modèle" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="annee" class="form-label"><strong>Année</strong></label>
+            <input id="annee" name="annee" type="text" value="{{ vehicule.annee }}" class="form-control w-full" placeholder="Année" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="couleur" class="form-label"><strong>Couleur</strong></label>
+            <input id="couleur" name="couleur" type="text" value="{{ vehicule.couleur }}" class="form-control w-full" placeholder="Couleur" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="type_carburant" class="form-label"><strong>Type de Carburant</strong></label>
+            <input id="type_carburant" name="type_carburant" type="text" value="{{ vehicule.type_carburant }}" class="form-control w-full" placeholder="Type de Carburant" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="capacite" class="form-label"><strong>Capacité</strong></label>
+            <input id="capacite" name="capacite" type="text" value="{{ vehicule.capacite }}" class="form-control w-full" placeholder="Capacité" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="prix_par_jour" class="form-label"><strong>Prix par Jour</strong></label>
+            <input id="prix_par_jour" name="prix_par_jour" type="text" value="{{ vehicule.prix_par_jour }}" class="form-control w-full" placeholder="Prix par Jour" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="immatriculation" class="form-label"><strong>Immatriculation</strong></label>
+            <input id="immatriculation" name="immatriculation" type="text" value="{{ vehicule.immatriculation }}" class="form-control w-full" placeholder="Immatriculation" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="kilometrage" class="form-label"><strong>Kilométrage</strong></label>
+            <input id="kilometrage" name="kilometrage" type="text" value="{{ vehicule.kilometrage }}" class="form-control w-full" placeholder="Kilométrage" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="etat" class="form-label"><strong>État</strong></label>
+            <select id="etat" name="etat" class="form-control" required>
+                {% for etat_option in etat_list %}
+                    <option value="{{ etat_option }}" {% if vehicule.etat == etat_option %}selected{% endif %}>{{ etat_option }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mt-6 w-full">
+            <button type="submit" class="btn btn-primary w-full">Update le Véhicule</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

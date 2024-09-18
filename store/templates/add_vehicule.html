@@ -1,97 +1,77 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Add Vehicle{% endblock %}
+{% block title %}ADD VEHICULE{% endblock %}
 
 {% block content %}
 <div class="intro-y flex items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">
-        Add Vehicle
+        ADD VEHICULE
     </h2>
 </div>
-<!-- BEGIN: Validation Form -->
-<form method="post" enctype="multipart/form-data" class="validate-form">
-    {% csrf_token %}
-    <div class="input-form">
-        <label for="marque" class="form-label w-full flex flex-col sm:flex-row">Marque</label>
-        <input id="marque" type="text" name="marque" class="form-control" placeholder="Marque du véhicule" required>
-    </div>
 
-    <div class="input-form mt-3">
-        <label for="modele" class="form-label w-full flex flex-col sm:flex-row">Modèle</label>
-        <input id="modele" type="text" name="modele" class="form-control" placeholder="Modèle du véhicule" required>
-    </div>
+<!-- Form container with a white background and padding for aesthetics -->
+<div class="bg-white p-5 rounded-lg shadow-md mt-6 w-full sm:w-3/4 lg:w-1/2 mx-auto">
 
-    <div class="input-form mt-3">
-        <label for="annee" class="form-label w-full flex flex-col sm:flex-row">Année</label>
-        <input id="annee" type="number" name="annee" class="form-control" placeholder="Année du véhicule" required>
-    </div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="mb-5 w-full">
+            <label for="marque" class="form-label"><strong>Marque</strong> </label>
+            <input id="marque" name="marque" type="text" class="form-control w-full" placeholder="Marque" required>
+        </div>
+        
+        <div class="mt-6 w-full">
+            <label for="modele" class="form-label"><strong>Modèle</strong></label>
+            <input id="modele" name="modele" type="text" class="form-control w-full" placeholder="Modèle" required>
+        </div>
+        
+        <div class="mt-6 w-full">
+            <label for="annee" class="form-label"><strong>Année</strong></label>
+            <input id="annee" name="annee" type="number" class="form-control" placeholder="Année" required>
+        </div>
+        
+        <div class="mt-6 w-full">
+            <label for="couleur" class="form-label"><strong>Couleur</strong></label>
+            <input id="couleur" name="couleur" type="text" class="form-control" placeholder="Couleur" required>
+        </div>
+        
+        <div class="mt-6 w-full">
+            <label for="type_carburant" class="form-label"><strong>Type de Carburant</strong></label>
+            <input id="type_carburant" name="type_carburant" type="text" class="form-control" placeholder="Type de Carburant" required>
+        </div>
+        
+        <div class="mt-6 w-full">
+            <label for="capacite" class="form-label"><strong>Capacité</strong></label>
+            <input id="capacite" name="capacite" type="number" class="form-control" max="9" min="2" placeholder="Capacité" required>
+        </div>
+        
+        <div class="mt-6 w-full">
+            <label for="prix_par_jour" class="form-label"><strong>Prix par Jour</strong></label>
+            <input id="prix_par_jour" name="prix_par_jour" type="number" step="0.01" min="0" class="form-control" placeholder="Prix par Jour" required>
+        </div>
+        
+        <div class="mt-6 w-full">
+            <label for="immatriculation" class="form-label"><strong>Immatriculation</strong></label>
+            <input id="immatriculation" name="immatriculation" type="text" class="form-control" placeholder="Immatriculation" required>
+        </div>
+        
+        <div class="mt-6 w-full">
+            <label for="kilometrage" class="form-label"><strong>Kilométrage</strong></label>
+            <input id="kilometrage" name="kilometrage" type="number" class="form-control" min="0" placeholder="Kilométrage" required>
+        </div>
+        
+        <div class="mt-6 w-full">
+            <label for="etat" class="form-label"><strong>État</strong></label>
+            <select id="etat" name="etat" class="form-control" required>
+                <option value="disponible">Disponible</option>
+                <option value="reservé">Réservé</option>
+                <option value="maintenance">Maintenance</option>
+            </select>
+        </div>
 
-    <div class="input-form mt-3">
-        <label for="couleur" class="form-label w-full flex flex-col sm:flex-row">Couleur</label>
-        <input id="couleur" type="text" name="couleur" class="form-control" placeholder="Couleur du véhicule" required>
-    </div>
-
-    <div class="input-form mt-3">
-        <label for="type_carburant" class="form-label w-full flex flex-col sm:flex-row">Type de Carburant</label>
-        <input id="type_carburant" type="text" name="type_carburant" class="form-control" placeholder="Type de carburant" required>
-    </div>
-
-    <div class="input-form mt-3">
-        <label for="capacite" class="form-label w-full flex flex-col sm:flex-row">Capacité</label>
-        <input id="capacite" type="number" name="capacite" class="form-control" placeholder="Capacité du véhicule" required>
-    </div>
-
-    <div class="input-form mt-3">
-        <label for="prix_par_jour" class="form-label w-full flex flex-col sm:flex-row">Prix par Jour</label>
-        <input id="prix_par_jour" type="number" name="prix_par_jour" step="0.01" class="form-control" placeholder="Prix par jour" required>
-    </div>
-
-    <div class="input-form mt-3">
-        <label for="immatriculation" class="form-label w-full flex flex-col sm:flex-row">Immatriculation</label>
-        <input id="immatriculation" type="text" name="immatriculation" class="form-control" placeholder="Immatriculation du véhicule" required>
-    </div>
-
-    <div class="input-form mt-3">
-        <label for="kilometrage" class="form-label w-full flex flex-col sm:flex-row">Kilométrage</label>
-        <input id="kilometrage" type="number" name="kilometrage" class="form-control" placeholder="Kilométrage du véhicule" required>
-    </div>
-
-    <div class="input-form mt-3">
-        <label for="etat" class="form-label w-full flex flex-col sm:flex-row">État</label>
-        <select id="etat" name="etat" class="form-control" required>
-            <option value="disponible">Disponible</option>
-            <option value="reservé">Réservé</option>
-            <option value="maintenance">Maintenance</option>
-        </select>
-    </div>
-
-    <div class="input-form mt-3">
-        <label for="photo" class="form-label w-full flex flex-col sm:flex-row">Photo</label>
-        <input id="photo" type="file" name="photo" class="form-control">
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-5">Register</button>
-</form>
-<!-- END: Validation Form -->
-
-<!-- BEGIN: Success Notification Content -->
-<div id="success-notification-content" class="toastify-content hidden flex">
-    <i class="text-success" data-lucide="check-circle"></i>
-    <div class="ml-4 mr-4">
-        <div class="font-medium">Registration success!</div>
-        <div class="text-slate-500 mt-1">The vehicle has been successfully added.</div>
-    </div>
+        <div class="mt-6 w-full">
+            <button type="submit" class="btn btn-primary w-full">Ajouter le Véhicule</button>
+        </div>
+    </form>
 </div>
-<!-- END: Success Notification Content -->
-
-<!-- BEGIN: Failed Notification Content -->
-<div id="failed-notification-content" class="toastify-content hidden flex">
-    <i class="text-danger" data-lucide="x-circle"></i>
-    <div class="ml-4 mr-4">
-        <div class="font-medium">Registration failed!</div>
-        <div class="text-slate-500 mt-1">Please check the fields and try again.</div>
-    </div>
-</div>
-<!-- END: Failed Notification Content -->
-
 {% endblock %}

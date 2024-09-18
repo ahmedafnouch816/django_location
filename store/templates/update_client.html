@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}UPDATE CLIENT{% endblock %}
+
+{% block content %}
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        UPDATE CLIENT
+    </h2>
+</div>
+
+<div class="bg-white p-5 rounded-lg shadow-md mt-6 w-full sm:w-3/4 lg:w-1/2 mx-auto">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="mb-5 w-full">
+            <label for="nom" class="form-label"><strong>NOM</strong></label>
+            <input id="nom" name="nom" type="text" value="{{ client.nom }}" class="form-control w-full" placeholder="Nom" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="prenom" class="form-label"><strong>PRENOM</strong></label>
+            <input id="prenom" name="prenom" type="text" value="{{ client.prenom }}" class="form-control w-full" placeholder="Prénom" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="email" class="form-label"><strong>EMAIL</strong></label>
+            <input id="email" name="email" type="email" value="{{ client.email }}" class="form-control w-full" placeholder="Email" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="telephone" class="form-label"><strong>TÉLÉPHONE</strong></label>
+            <input id="telephone" name="telephone" type="text" value="{{ client.telephone }}" class="form-control w-full" placeholder="Téléphone" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="adresse" class="form-label"><strong>ADRESSE</strong></label>
+            <input id="adresse" name="adresse" type="text" value="{{ client.adresse }}" class="form-control w-full" placeholder="Adresse" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="permis_conduire" class="form-label"><strong>PERMIS DE CONDUIRE</strong></label>
+            <input id="permis_conduire" name="permis_conduire" type="file" class="form-control w-full">
+            {% if client.permis_conduire %}
+                <a href="{{ client.permis_conduire.url }}" target="_blank">Current Permis de Conduire</a>
+            {% endif %}
+        </div>
+
+        <div class="mt-6 w-full">
+            <button type="submit" class="btn btn-primary w-full">Update le Client</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

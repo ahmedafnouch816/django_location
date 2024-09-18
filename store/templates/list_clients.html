@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Liste des Clients{% endblock %}
+
+{% block css %}
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
+    <!-- Lightbox CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        LISTE DES CLIENTS
+    </h2>
+</div>
+<div class="container mt-4">
+    <div class="overflow-x-auto">
+        <table id="clientTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th class="whitespace-nowrap">Nom</th>
+                    <th class="whitespace-nowrap">Prénom</th>
+                    <th class="whitespace-nowrap">Email</th>
+                    <th class="whitespace-nowrap">Téléphone</th>
+                    <th class="whitespace-nowrap">Adresse</th>
+                    <th class="whitespace-nowrap">Date d'Inscription</th>
+                    <th class="whitespace-nowrap">Permis conduire</th>
+                    <th class="whitespace-nowrap">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                    <tr>
+                        <td>{{ client.nom }}</td>
+                        <td>{{ client.prenom }}</td>
+                        <td>{{ client.email }}</td>
+                        <td>{{ client.telephone }}</td>
+                        <td>{{ client.adresse }}</td>
+                        <td>{{ client.date_inscription }}</td>
+                        <td>
+                            {% if client.permis_conduire %}
+                                <a href="{{ client.permis_conduire.url }}" data-lightbox="client-{{ client.id }}" data-title="Permis de conduire de {{ client.nom }}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'update_client' client.id %}" class="btn btn-primary">Update</a>
+                            <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-modal-{{ client.id }}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+
+                    <!-- Modal for Delete Confirmation -->
+                    <div id="delete-modal-{{ client.id }}" class="modal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <a data-tw-dismiss="modal" href="javascript:;">
+                                    <i data-lucide="x" class="w-8 h-8 text-slate-400"></i>
+                                </a>
+                                <div class="modal-body p-5 text-center">
+                                    <i data-lucide="trash" class="w-16 h-16 text-danger mx-auto mt-3"></i>
+                                    <div class="text-3xl mt-5">Supprimer le Client</div>
+                                    <div class="text-slate-500 mt-2">Êtes-vous sûr de vouloir supprimer ce client ?</div>
+                                </div>
+                                <div class="px-5 pb-8 text-center">
+                                    <form method="POST" action="{% url 'delete_client' client.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger w-24">Supprimer</button>
+                                        <button type="button" data-tw-dismiss="modal" class="btn btn-secondary w-24">Annuler</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <!-- DataTables Bootstrap JS -->
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+    <!-- FontAwesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <!-- Lightbox JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
+    <!-- DataTables Initialization -->
+    <script>
+        $(document).ready(function() {
+            $('#clientTable').DataTable({
+                pageLength: 10,
+                lengthMenu: [5, 10, 25],
+                language: {
+                    search: "",
+                    searchPlaceholder: "Rechercher...",
+                    processing: "Chargement en cours...",
+                    lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+                    info: "Affichage de _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    infoEmpty: "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    paginate: {
+                        first: "Premier",
+                        previous: "Pr&eacute;c&eacute;dent",
+                        next: "Suivant",
+                        last: "Dernier"
+                    },
+                },
+                drawCallback: function(settings) {
+                    var info = $('#clientTable_info');
+                    var lengthMenu = $('#clientTable_length');
+                    var tableWrapper = $('#clientTable_wrapper');
+                    tableWrapper.find('.row:eq(0)').prepend(lengthMenu);
+                    tableWrapper.find('.row:eq(1)').prepend(info);
+                    lengthMenu.css('position', 'absolute').css('bottom', '0').css('left', '0');
+                }
+            });
+        });
+    </script>
+{% endblock %}

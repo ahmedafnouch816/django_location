@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reserved Vehicles</title>
+</head>
+<body>
+    <h1>Reserved Vehicles</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Réservation ID</th>
+                <th>Client</th>
+                <th>Véhicule</th>
+                <th>Date Début</th>
+                <th>Date Fin</th>
+                <th>Prix Total</th>
+                <th>Date Réservation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.client }}</td>
+                <td>{{ reservation.vehicule }}</td>
+                <td>{{ reservation.date_debut }}</td>
+                <td>{{ reservation.date_fin }}</td>
+                <td>{{ reservation.prix_total }}</td>
+                <td>{{ reservation.date_reservation }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">Aucune réservation trouvée.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}ADD CLIENT{% endblock %}
+
+{% block content %}
+
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">
+        ADD CLIENT
+    </h2>
+</div>
+
+<div class="bg-white p-5 rounded-lg shadow-md mt-6 w-full sm:w-3/4 lg:w-1/2 mx-auto">
+
+    <form method="POST" enctype="multipart/form-data" id="clientForm">
+        {% csrf_token %}
+           
+        <div class="mb-5 w-full">
+            <label for="nom" class="form-label"><strong>Nom</strong></label>
+            <input id="nom" name="nom" type="text" class="form-control w-full" placeholder="Nom" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="prenom" class="form-label"><strong>Prénom</strong></label>
+            <input id="prenom" name="prenom" type="text" class="form-control w-full" placeholder="Prénom" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="email" class="form-label"><strong>Email</strong></label>
+            <input id="email" name="email" type="email" class="form-control w-full" placeholder="Email" required>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="telephone" class="form-label"><strong>Téléphone</strong></label>
+            <input id="telephone" name="telephone" type="text" class="form-control w-full" placeholder="Téléphone">
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="adresse" class="form-label"><strong>Adresse</strong></label>
+            <textarea id="adresse" name="adresse" class="form-control w-full" placeholder="Adresse"></textarea>
+        </div>
+
+        <div class="mt-6 w-full">
+            <label for="permis_conduire" class="form-label"><strong>Permis de Conduire</strong></label>
+            <input id="permis_conduire" name="permis_conduire" type="file" class="form-control">
+        </div>
+
+        <div class="mt-6 w-full">
+            <button type="submit" id="submitButton" class="btn btn-primary w-full" style="position: relative; overflow: hidden;">
+                ADD NEW CLIENT
+                <span id="loader" style="display: none; position: absolute; left: 90%; top: 50%; transform: translate(-50%, -50%);">
+                    <!-- Inline SVG loader -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="gray" stroke-width="4" fill="none" />
+                        <circle cx="12" cy="12" r="10" stroke="black" stroke-width="4" fill="none" stroke-dasharray="63" stroke-dashoffset="63">
+                            <animate attributeName="stroke-dashoffset" values="63;0" dur="1.5s" repeatCount="indefinite"/>
+                        </circle>
+                    </svg>
+                </span>
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('clientForm').addEventListener('submit', function(event) {
+        // Prevent the form from submitting immediately
+        event.preventDefault();
+        
+        // Show the loader and hide the button text
+        var loader = document.getElementById('loader');
+        var submitButton = document.getElementById('submitButton');
+        
+        loader.style.display = 'inline-block';
+        submitButton.disabled = true;
+        
+        // Set a timeout to hide the loader after 10 seconds
+        setTimeout(function() {
+            // Submit the form programmatically after hiding the loader
+            document.getElementById('clientForm').submit();
+        }, 10000); // 10000 milliseconds = 10 seconds
+    });
+</script>
+
+{% endblock %}

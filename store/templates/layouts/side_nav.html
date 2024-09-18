@@ -48,25 +48,28 @@
             <li>
                 <a href="javascript:;" class="menu">
                     <div class="menu__icon"> <i data-lucide="box"></i> </div>
-                    <div class="menu__title"> Menu Layout <i data-lucide="chevron-down" class="menu__sub-icon "></i> </div>
+                    <div class="menu__title"> VEHICULE <i data-lucide="chevron-down" class="menu__sub-icon "></i> </div>
                 </a>
                 <ul class="">
                     <li>
-                        <a href="{% url 'add_vicule' %}" class="menu menu--active">
+                        <a href="{% url 'add_vehicule' %}" class="menu menu--active">
                             <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                            <div class="menu__title">ADD VIECULE </div>
+                            <div class="menu__title">ADD VEHICULE </div>
                         </a>
                     </li>
+                    <!--
                     <li>
-                        <a href="simple-menu-light-dashboard-overview-1.html" class="menu menu--active">
-                            <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                            <div class="menu__title"> Simple Menu </div>
+                        <a href="#" class="menu">
+                            <div class="menu__icon">
+                                <i data-lucide="activity"></i>
+                            </div>
+                            <div class="menu__title">UPDATE VEHICULE</div>
                         </a>
-                    </li>
+                    </li>-->
                     <li>
-                        <a href="top-menu-light-dashboard-overview-1.html" class="menu menu--active">
+                        <a href="{% url 'list_vehicules'%}" class="menu menu--active">
                             <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                            <div class="menu__title"> Top Menu </div>
+                            <div class="menu__title"> LISTES DES VIHECULES </div>
                         </a>
                     </li>
                 </ul>
@@ -74,42 +77,48 @@
             <li>
                 <a href="javascript:;" class="menu">
                     <div class="menu__icon"> <i data-lucide="shopping-bag"></i> </div>
-                    <div class="menu__title"> E-Commerce <i data-lucide="chevron-down" class="menu__sub-icon "></i> </div>
+                    <div class="menu__title">  CLIENTS <i data-lucide="chevron-down" class="menu__sub-icon "></i> </div>
                 </a>
                 <ul class="">
                     <li>
-                        <a href="side-menu-light-categories.html" class="menu">
+                        <a href="{% url 'add_client'%}" class="menu">
                             <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                            <div class="menu__title"> Categories </div>
+                            <div class="menu__title"> AJOUTER CLIENT </div>
                         </a>
                     </li>
                     <li>
-                        <a href="side-menu-light-add-product.html" class="menu">
+                        <a href="{% url 'list_clients' %}" class="menu">
                             <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                            <div class="menu__title"> Add Product </div>
+                            <div class="menu__title"> LISTES DES CLIENTS </div>
                         </a>
                     </li>
+
+                </li>
+
+            </li>  
                     <li>
                         <a href="javascript:;" class="menu">
-                            <div class="menu__icon"> <i data-lucide="activity"></i> </div>
-                            <div class="menu__title"> Products <i data-lucide="chevron-down" class="menu__sub-icon "></i> </div>
+                            <div class="menu__icon"> <i data-lucide="edit"></i> </div>
+                            <div class="menu__title"> Crud <i data-lucide="chevron-down" class="menu__sub-icon "></i> </div>
                         </a>
                         <ul class="">
                             <li>
-                                <a href="side-menu-light-product-list.html" class="menu">
-                                    <div class="menu__icon"> <i data-lucide="zap"></i> </div>
-                                    <div class="menu__title">Product List</div>
+                                <a href="{% url 'reserved_vehicles_list' %}" class="menu">
+                                    <div class="menu__icon"> <i data-lucide="activity"></i> </div>
+                                    <div class="menu__title"> Data List </div>
                                 </a>
                             </li>
                             <li>
-                                <a href="side-menu-light-product-grid.html" class="menu">
-                                    <div class="menu__icon"> <i data-lucide="zap"></i> </div>
-                                    <div class="menu__title">Product Grid</div>
+                                <a href="side-menu-light-crud-form.html" class="menu">
+                                    <div class="menu__icon"> <i data-lucide="activity"></i> </div>
+                                    <div class="menu__title"> Form </div>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li>
+
+                    <!--
+                        <li>
                         <a href="javascript:;" class="menu">
                             <div class="menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="menu__title"> Transactions <i data-lucide="chevron-down" class="menu__sub-icon "></i> </div>
@@ -639,6 +648,8 @@
                     </li>
                 </ul>
             </li>
+            -->
+
         </ul>
     </div>
 </div>

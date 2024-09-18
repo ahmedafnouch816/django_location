@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Liste des Véhicules{% endblock %}
+
+{% block css %}
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">LISTE DES VEHICULES</h2>
+</div>
+<div class="container mt-4">
+    <div class="overflow-x-auto">
+        <table id="vehicleTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th class="whitespace-nowrap">Marque</th>
+                    <th class="whitespace-nowrap">Modèle</th>
+                    <th class="whitespace-nowrap">Année</th>
+                    <th class="whitespace-nowrap">Couleur</th>
+                    <th class="whitespace-nowrap">Type Carburant</th>
+                    <th class="whitespace-nowrap">Capacité</th>
+                    <th class="whitespace-nowrap">Prix par Jour</th>
+                    <th class="whitespace-nowrap">Immatriculation</th>
+                    <th class="whitespace-nowrap">Kilométrage</th>
+                    <th class="whitespace-nowrap">État</th>
+                    <th class="whitespace-nowrap">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehicule in vehicules %}
+                    <tr>
+                        <td>{{ vehicule.marque }}</td>
+                        <td>{{ vehicule.modele }}</td>
+                        <td>{{ vehicule.annee }}</td>
+                        <td>{{ vehicule.couleur }}</td>
+                        <td>{{ vehicule.type_carburant }}</td>
+                        <td>{{ vehicule.capacite }}</td>
+                        <td>{{ vehicule.prix_par_jour }}</td>
+                        <td>{{ vehicule.immatriculation }}</td>
+                        <td>{{ vehicule.kilometrage }}</td>
+                        <td>{{ vehicule.etat }}</td>
+                        <td>
+                            <a href="{% url 'update_vehicule' vehicule.id %}" class="btn btn-primary">Update</a>
+                            <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#delete-modal-{{ vehicule.id }}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    <!-- Modal for Delete Confirmation -->
+                    <div id="delete-modal-{{ vehicule.id }}" class="modal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <a data-tw-dismiss="modal" href="javascript:;">
+                                    <i data-lucide="x" class="w-8 h-8 text-slate-400"></i>
+                                </a>
+                                <div class="modal-body p-5 text-center">
+                                    <i data-lucide="trash" class="w-16 h-16 text-danger mx-auto mt-3"></i>
+                                    <div class="text-3xl mt-5">Supprimer le Véhicule</div>
+                                    <div class="text-slate-500 mt-2">Êtes-vous sûr de vouloir supprimer ce véhicule ?</div>
+                                </div>
+                                <div class="px-5 pb-8 text-center">
+                                    <form method="POST" action="{% url 'delete_vehicule' vehicule.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger w-24">Supprimer</button>
+                                        <button type="button" data-tw-dismiss="modal" class="btn btn-secondary w-24">Annuler</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <!-- DataTables Bootstrap JS -->
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- DataTables Initialization -->
+    <script>
+        $(document).ready(function() {
+            $('#vehicleTable').DataTable({
+                pageLength: 5,
+                lengthMenu: [5, 10, 25],
+                language: {
+                    search: "",
+                    searchPlaceholder: "Rechercher...",
+                    processing: "Chargement en cours...",
+                    lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+                    info: "Affichage de _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    infoEmpty: "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    paginate: {
+                        first: "Premier",
+                        previous: "Pr&eacute;c&eacute;dent",
+                        next: "Suivant",
+                        last: "Dernier"
+                    },
+                },
+                drawCallback: function(settings) {
+                    var info = $('#vehicleTable_info');
+                    var lengthMenu = $('#vehicleTable_length');
+                    var tableWrapper = $('#vehicleTable_wrapper');
+                    tableWrapper.find('.row:eq(0)').prepend(lengthMenu);
+                    tableWrapper.find('.row:eq(1)').prepend(info);
+                    lengthMenu.css('position', 'absolute').css('bottom', '0').css('left', '0');
+                }
+            });
+        });
+    </script>
+{% endblock %}
